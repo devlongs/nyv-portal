@@ -1,0 +1,30 @@
+.home__partners-wrapper{
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.home__partners-wrapper div{
+   width: 15%;
+}
+
+.home__partners-wrapper img{
+    width: 100%;
+}
+
+@media screen and (max-width: 576px) {
+    .home__partners-wrapper{
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+        margin-top: 30px;
+    }
+
+    .home__partners-wrapper div{
+        width: 25%;
+        margin-right: 20px;
+     }
+  }

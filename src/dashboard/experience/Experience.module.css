@@ -1,0 +1,30 @@
+.experience{
+    width: 100%;
+    margin: 50px 0;
+    padding: 0 20px;
+}
+
+#experiencetable {
+    border-collapse: collapse;
+    width: 100%;
+    border: none;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  }
+
+#experiencetable caption{
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 17px;
+}
+  
+#experiencetable td, #experiencetable{
+border: 1px solid #f2f2f2;
+padding: 8px;
+font-size: 15px;
+}
+  
+  
+#experiencetable tr:hover {
+    background-color: #f2f2f2;
+}
+  

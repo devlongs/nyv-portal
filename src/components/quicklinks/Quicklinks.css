@@ -1,0 +1,103 @@
+.home__quicklinks{
+    height: 600px;
+    background: linear-gradient(0deg, rgba(14, 24, 9, 0.9), rgba(14, 24, 9, 0.9)), url(../../img/anna-earl-J-Jb1niw1j0-unsplash.jpg);
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    }
+    
+    .home__quicklinks h2{
+    text-align: center;
+    margin: 20px 0;
+    color: white;
+    }
+    
+    .home__quicklinks .links{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0 auto;
+    }
+    
+    .home__quicklinks .links .link{
+    color: white;
+    text-align: center;
+    }
+    
+    .link p{
+    font-size: 17px;
+    margin: 20px 0;
+    }
+
+    .link p a{
+        color: white;
+        text-decoration: none;
+        }
+    
+    
+    .home__quicklinks .profile{
+    display: block;
+    color: white;
+    padding: 15px;
+    margin: 10px auto;
+    background-color:#00b41e;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    font-family: Montserrat-Medium;
+    text-align: center;
+    text-decoration: none;
+    }
+    
+    .home__quicklinks h3{
+    text-align: center;
+    color: white;
+    margin: 40px 0;
+    letter-spacing: 3px;
+    font-size: 1.5rem;
+    }
+    
+    .home__quicklinks .social-icons{
+    display: flex;
+    justify-content: center;
+    }
+    
+    .home__quicklinks .social-icons img{
+    width: 25px;
+    text-align: center;
+    margin: 10px 10px;
+    }
+
+    @media screen and (max-width: 576px) {
+        .home__quicklinks h2{
+            font-size: 16px;
+        }
+
+        .link p{
+            font-size: 15px;
+            margin: 20px 0;
+        }
+
+        .home__quicklinks .profile{
+            display: block;
+            color: white;
+            padding: 15px;
+            margin: 10px auto;
+            background-color:#00b41e;
+            font-size: 17px;
+            font-family: Montserrat-Medium;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .home__quicklinks h3{
+            text-align: center;
+            color: white;
+            margin: 40px 0;
+            letter-spacing: 3px;
+            font-size: 15px;
+        }
+      }

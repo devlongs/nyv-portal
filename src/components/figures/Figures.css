@@ -1,0 +1,39 @@
+.home__figures{
+    height: 150px;
+    background-color: #083a10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    font-family: Montserrat-Thin;
+}
+
+.home__figures div{
+   margin-right: 25px;
+}
+
+.home__figures div img{
+    height: 50px;
+}
+
+.home__figures div h3{
+    font-size: 16px;
+    padding: 10px;
+}
+
+@media screen and (max-width: 576px) {
+    .home__figures div{
+        margin-right: 20px;
+     }
+
+     .home__figures div img{
+        height: 25px;
+    }
+
+    .home__figures div h3{
+        font-size: 15px;
+        padding: 10px;
+    }
+  }
+

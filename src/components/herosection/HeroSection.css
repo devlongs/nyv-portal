@@ -1,0 +1,57 @@
+.home__hero-section{
+    height: calc(100vh - 80px);
+    background: linear-gradient(0deg, rgba(14, 24, 9, 0.7), rgba(14, 24, 9, 0.7)), url(./../../img/anna-earl-J-Jb1niw1j0-unsplash.jpg);
+    background-position: center;
+    background-size: cover;
+    padding-bottom: 50px;
+    
+}
+
+.home__hero-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.home__primary-links{
+    display: flex;
+    list-style: none;
+    margin-left: 20px;
+    margin-top: 50px;
+}
+
+.home__primary-links li a{
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+}
+
+.home__hero-container h1{
+    font-size: 45px;
+    text-align: center;
+    color: white;
+}
+
+.home__primary-links li{
+    background-color: #00b41e;
+    padding: 15px 10px;
+    margin-right: 20px;
+}
+
+@media screen and (max-width: 576px) {
+    .home__hero-container h1{
+        font-size: 30px;
+        line-height: 50px;
+        text-align: center;
+        color: white;
+    }
+
+    .home__primary-links li a{
+        text-decoration: none;
+        color: white;
+        font-size: 15px;
+    }
+    
+  }

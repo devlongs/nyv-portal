@@ -1,0 +1,24 @@
+.newsfeed-container{
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    color: #555A64;
+    }
+    
+    .newsfeed-container h2{
+    color:#00b41e;
+    margin-bottom: 20px;
+    }
+    
+    .newsfeed{
+    box-shadow:0 0 3px rgba(0, 0, 0, 0.5);
+    padding: 40px 30px;
+    border-radius: 2px;
+    }
+    
+    .newsfeed p{
+    line-height: 30px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 15px;
+    }

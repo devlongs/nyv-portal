@@ -1,0 +1,99 @@
+.body{
+    width: 100vw;
+    height: 100vh;
+}
+
+.header{
+    height: 300px;
+    background:#2ec346;
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+a{
+    text-decoration: none;
+    color: #2ec346;
+}
+
+.formcontainer{
+    width: 400px;
+    height: 400px;
+    padding: 30px;
+    background-color: white;
+    border-bottom: 0 none;
+    box-shadow: 0 4px 12px 0 rgb(35 35 35 / 16%);
+    border-radius: 2px;
+    z-index: 900;
+    margin: 0 auto;
+    margin-top: -200px;
+}
+
+.formcontainer form h1{
+    font-size: 17px;
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.formcontainer form p{
+    font-size: 15px;
+    color: #cecdcd;
+    text-align: center;
+    margin: 15px 0;
+}
+
+.forminputs .forminput:focus{
+    outline: none;
+    border: 1px solid #2ec346;
+    background-color: white;
+  }
+
+.formcontainer form img{
+   width: 50px;
+   margin: 0 auto;
+   display:block;
+   margin-top: 15px;
+   margin-bottom: 15px;
+}
+
+.forminputs{
+    width: 100%;
+    margin-bottom: 10px;
+    
+}
+
+
+.forminputs .forminput{
+    width: 100%;
+    padding: 10px 5px;
+    border: none;
+    outline: none;
+    box-shadow: 0 1px 4px 0 rgb(35 35 35 / 16%);
+  
+    background-color: #fff;
+    font-size: 14px;
+    border: 1px solid transparent;
+    color: #3a3939;
+    transition: box-shadow .2s ease;
+}
+
+.formbtn{
+    width: 100%;
+    display: block;
+    padding: 10px 5px;
+    border: 0;
+    outline: none;
+    background-color: #2ec346;
+    color: white;
+    font-size: 20px;
+}
+
+.formbtn:hover{
+    background-color: #1a5e25;
+    box-shadow: 0 4px 12px 0 rgb(35 35 35 / 16%);
+    transition: all 1s;
+}

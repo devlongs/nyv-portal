@@ -1,0 +1,29 @@
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #00b41e;
+    font-size: 16px;
+    }
+    
+    footer .col{
+    width: 50%;
+    text-align: center;
+    color: white;
+    font-family: Montserrat-Thin;
+    padding: 20px;
+    }
+    
+    footer .col:first-child{
+    border-right: 2px solid white;
+    }  
+
+    @media screen and (max-width: 576px) {
+        footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #00b41e;
+            font-size: 14px;
+        }
+      }

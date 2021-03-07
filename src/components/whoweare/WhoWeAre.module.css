@@ -1,0 +1,110 @@
+@media screen and (min-width: 901px){
+   .mainContainer{
+    width: 70%;
+    margin: auto;
+    display: flex;
+    height: 400px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.46);
+    margin-bottom: 50px;
+    color: #555A64;
+    line-height: 25px;
+}
+
+.mainContainer h1{
+    color: #00b41e;
+    margin-bottom: 10px;
+    font-size: 17px;
+}
+
+.leftSide{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.leftSide img{
+    width: 80%;
+    height: 80%;
+    display: block;
+}
+
+.rightSide{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 10px;
+    font-size: 15px;
+}
+
+.rightSide a{
+    background-color: #00b41e;
+    padding: 10px 10px;
+    text-decoration: none;
+    justify-self: start;
+    color: white;
+}
+
+.rightSide a:hover{
+    background-color: #022508;
+    padding: 10px 10px;
+    text-decoration: none;
+    justify-self: start;
+    color: white;
+    transition: all 1s;
+}
+}
+
+@media screen and (max-width: 900px) {
+    .mainContainer{
+        width: 95%;
+        margin: auto;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.46);
+        margin-bottom: 50px;
+        color: #555A64;
+        line-height: 25px;
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .mainContainer h1{
+        color: #00b41e;
+        margin: 10px 0;
+        font-size: 17px;
+    }
+
+
+    .leftSide img{
+        width: 100%;
+        display: block;
+    }
+    
+    .rightSide{
+       text-align: center;
+        padding: 0 10px;
+        font-size: 15px;
+    }
+
+    .rightSide a{
+        background-color: #00b41e;
+        padding: 10px 10px;
+        text-decoration: none;
+        justify-self: start;
+        color: white;
+        display: inline-block;
+        margin: 20px 0;
+    }
+    
+    .rightSide a:hover{
+        background-color: #022508;
+        padding: 10px 10px;
+        text-decoration: none;
+        justify-self: start;
+        color: white;
+        transition: all 1s;
+    }
+  }
