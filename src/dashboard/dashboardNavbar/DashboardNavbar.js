@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import styles from './DashboardNavbar.module.css';
 import logo from '../../img/logo.png';
 
-function DashboardNavbar() {
+function DashboardNavbar(props) {
     return (
         <>
             <nav>
@@ -14,7 +14,7 @@ function DashboardNavbar() {
                 <ul className={styles.menu}>
                     <li><Link to='/'>Home</Link></li>
                     <li><BsFillPersonFill /></li>
-                    <li>Timothy Saraph</li>
+                    <li>{props.name}</li>
                 </ul>
             </nav>
         </>

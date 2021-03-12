@@ -1,83 +1,74 @@
 import React from 'react';
+import axios from "axios";
 import logo from '../../img/logo.png';
 import {Link} from 'react-router-dom';
+import { withFormik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 import { BsFillLockFill } from "react-icons/bs";
 import styles from './Login.module.css';
 
-const initialState = {
-    email: "",
-    emailError: "",
-    password: "",
-    passwordError: ""
-};
-
-class Login extends React.Component{
-    state = initialState;
-
-    handleChange = event => {
-        const isCheckbox = event.target.type === "checkbox";
-        this.setState({
-            [event.target.name]: isCheckbox ? event.target.checked : event.target.value
-        });
-    };
-
-    validate =() =>{
-        let emailError = "";
-        let passwordError = "";
-
-        if(!this.state.email.includes('@') || this.state.email.length < 5){
-            emailError = 'Invalid email';
-    }
-
-        if(this.state.password.length < 5){
-            passwordError = 'Invalid Password';
-        }
-
-        if(emailError || passwordError){
-            this.setState({emailError, passwordError});
-            return false;
-        }
-
-        return true;
-    }
-
-    handleSubmit = event => {
-        event.preventDefault();
-        const isValid = this.validate(); 
-        if(isValid){
-            console.log(this.state);
-             // Clear form
-            this.setState(initialState);
-        }
-    }
-
-    render(){
+const Login = ({errors, touched}) => {
         return (
             <div className={styles.body}>
                 <div className={styles.header}></div>
                 <div className={styles.formcontainer}>
-                    <form onSubmit={this.handleSubmit}>
+                    <Form>
                         <img src={logo} />
                         <h1>Login with your NYV Account</h1>
                         <p>New to NYV? <Link to='/signup'>Sign up</Link></p>
                         <div className={styles.forminputs}>
-                            <input placeholder="email" className={styles.forminput} type="email" name="email" value={this.state.email} onChange={this.handleChange}/>
-                            <div style={{color: "red", fontSize: "14px", padding: "5px"}}>{this.state.emailError}</div>
+                            <Field placeholder="email" className={styles.forminput} type="email" name="email"/>
+                            {touched.email && errors.email && <p>{errors.email }</p>}
                         </div>
                         <div className={styles.forminputs}>
-                            <input placeholder="Password" className={styles.forminput} type="password" name="password" value = {this.state.password}onChange={this.handleChange}/>
-                            <div style={{color: "red", fontSize: "14px", padding: "5px"}}>{this.state.passwordError}</div>
+                            <Field placeholder="Password" className={styles.forminput} type="password" name="password" />
+                            {touched.password && errors.password && <p>{errors.password }</p>}
                         </div>
                         <div className={styles.forminputs}>
                             <button type="submit" className={styles.formbtn}>Submit</button>
                         </div>
                         <p><BsFillLockFill /> Forgot your Password?</p>
-                    </form>
+                    </Form>
                 </div>
             </div>
         )
-    }
 }
 
+const FormikLogin = withFormik({
+    mapPropsToValues() {
+        return {
+            email: '',
+            password: ''
+        }
+    }, 
+    validationSchema: Yup.object().shape({
+        email: Yup.string().email('Email not valid').required('Email is required'),
+        password: Yup.string().min(5, 'Password must be 9 characters or longer').required('Password is required')
+    }),
+    handleSubmit(values){
+        const configuration = {
+            method: "post",
+            url: "https://volunteer109.herokuapp.com/api/auth/login",
+            data: {
+              email: values.email,
+              password: values.password
+            },
+            headers: { 'Content-Type': 'application/json' }
+          };
 
-export default Login
+          axios(configuration)
+          .then((result) => {
+             console.log(result.data.status)
+             if(result.data.status == 'Success'){
+                window.location = "/dashboard";
+             }
+            //   sessionStorage.setItem('token', JSON.stringify(result.data.data));
+            //   resetForm();
+            //   setSubmitting(false)
+            })
+          .catch((error) => {console.log(error);})
+    }
+})(Login)
+
+
+export default FormikLogin;

@@ -5,10 +5,10 @@ import PersonalInfo from '../personalinfo/PersonalInfo';
 import Skills from '../skills/Skills';
 import styles from  './Main.module.css';
 
-function Main() {
+function Main(props) {
     return (
         <div className={styles.main}>
-               <PersonalInfo />
+               <PersonalInfo email={props.email}/>
                <Addresses />
                <Skills />
                <Experience />

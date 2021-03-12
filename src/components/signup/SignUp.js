@@ -1,116 +1,93 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from "axios";
 import logo from '../../img/logo.png';
 import {Link} from 'react-router-dom';
+import { withFormik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 import { BsFillLockFill } from "react-icons/bs";
 import styles from './Signup.module.css';
 
-const initialState = {
-    name: "",
-    nameError: "",
-    email: "",
-    emailError: "",
-    phone: "",
-    phoneError: "",
-    password: "",
-    passwordError: "",
-    confirmPassword: "",
-    confirmPasswordError: ""
-};
 
-class SignUp extends React.Component{
-    state = initialState;
-
-    handleChange = event => {
-        const isCheckbox = event.target.type === "checkbox";
-        this.setState({
-            [event.target.name]: isCheckbox ? event.target.checked : event.target.value
-        });
-    };
-
-    validate =() =>{
-        let nameError = "";
-        let emailError = "";
-        let phoneError = "";
-        let passwordError = "";
-        let confirmPasswordError = "";
-
-        if(this.state.name === "" || this.state.name.length < 5){
-            nameError = 'Invalid name';
-        }
-
-        if(!this.state.email.includes('@') || this.state.email.length < 5){
-            emailError = 'Invalid email';
-        }
-
-        if(this.state.phone.length < 11 || this.state.phone === ""){
-            phoneError = 'Invalid Phone Number';
-        }
-
-        if(this.state.password.length < 5){
-            passwordError = 'Invalid Password';
-        }
-
-        if(this.state.password != this.state.confirmPassword){
-            confirmPasswordError = 'Password does not match';
-        }
-
-        if(nameError || emailError || phoneError || passwordError || confirmPasswordError){
-            this.setState({nameError, emailError, phoneError, passwordError, confirmPasswordError});
-            return false;
-        }
-
-        return true;
-    }
-
-    handleSubmit = event => {
-        event.preventDefault();
-        const isValid = this.validate(); 
-        if(isValid){
-            console.log(this.state);
-             // Clear form
-            this.setState(initialState);
-        }
-    }
-
-    render(){
+const SignUp = ({errors, touched, isSubmitting}) =>{
         return (
             <div className={styles.body}>
                 <div className={styles.header}></div>
                 <div className={styles.formcontainer}>
-                    <form onSubmit={this.handleSubmit}>
+                    <Form >
                         <img src={logo} />
                         <h1>Create a new NYV Account</h1>
                         <div className={styles.forminputs}>
-                            <input placeholder="Name" className={styles.forminput} type="text" name="name" value={this.state.name} onChange={this.handleChange}/>
-                            <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.nameError}</div>
+                            <Field placeholder="Name" className={styles.forminput} type="text" name="name" />
+                            {touched.name && errors.name && <p style={{color: "red"}}>{errors.name }</p>}
                         </div>
                         <div className={styles.forminputs}>
-                            <input placeholder="Email" className={styles.forminput} type="email" name="email" value={this.state.email} onChange={this.handleChange}/>
-                            <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.emailError}</div>
+                            <Field placeholder="Email" className={styles.forminput} type="email" name="email" />
+                            {touched.email && errors.email && <p style={{color: "red"}}>{errors.email }</p>}
                         </div>
                          <div className={styles.forminputs}>         
-                            <input className={styles.forminput} type="tel" name="phone" placeholder="Phone Number" value={this.state.phone} onChange={this.handleChange}/>
-                            <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.phoneError}</div>
+                            <Field className={styles.forminput} type="tel" name="phone" placeholder="Phone Number" />
+                            {touched.phone && errors.phone && <p style={{color: "red"}}>{errors.phone }</p>}
                         </div>
                         <div className={styles.forminputs}> 
-                            <input className={styles.forminput} type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange}/>
-                            <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.passwordError}</div>
+                            <Field className={styles.forminput} type="password" name="password" placeholder="Password" />
+                            {touched.password && errors.password && <p style={{color: "red"}}>{errors.password }</p>}
                        </div>
                        <div className={styles.forminputs}>
-                           <input className={styles.forminput} type="password" name="confirmPassword" placeholder="Confirm Password" value={this.state.confirmPassword} onChange={this.handleChange}/>
-                           <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.confirmPasswordError}</div>
+                           <Field className={styles.forminput} type="password" name="confirmPassword" placeholder="Confirm Password"/>
+                           {touched.confirmPassword && errors.confirmPassword && <p style={{color: "red"}}>{errors.confirmPassword }</p>}
                        </div>
                        <div className={styles.forminputs}>
-                            <button type="submit" className={styles.formbtn}>CREATE ACCOUNT</button>
+                            <button type="submit" className={styles.formbtn}>{isSubmitting ? 'Loading...' : 'CREATE ACCOUNT'}</button>
                         </div>
                         <p><BsFillLockFill /> I already have an account? <Link to='/login'>Login</Link></p>
-                    </form>
+                    </Form>
                 </div>
             </div>
         )
-    }
 }
 
+const FormikSignUp = withFormik({
+    mapPropsToValues() {
+        return {
+            name: '',
+            email: '',
+            phone: '',
+            password: '',
+            confirmPassword: ''
+        }
+    }, 
+    validationSchema: Yup.object().shape({
+        name: Yup.string('Name must be a string').min(5, 'Name must be 5 characters or longer').required('Name is required'),
+        email: Yup.string().email('Email not valid').required('Email is required'),
+        phone: Yup.number('Phone must be a number').min(11, 'Phone must a 11 digits').required('Phone is required'),
+        password: Yup.string().min(5, 'Password must be 9 characters or longer').required('Password is required'),
+        confirmPassword: Yup.string().min(5, 'Password must be 9 characters or longer').required('Confirm password is required')
+    }),
+    handleSubmit(values, {setSubmitting, resetForm, setErrors}){
+        const configuration = {
+            method: "post",
+            url: "https://volunteer109.herokuapp.com/api/auth/register",
+            data: {
+              name: values.name,
+              email: values.email,
+              password: values.password,
+              password_confirmation: values.confirmPassword
+            },
+            headers: { 'Content-Type': 'application/json' }
+          };
 
-export default SignUp
+          axios(configuration)
+          .then((result) => {
+              console.log(result);
+              sessionStorage.setItem('token', JSON.stringify(result.data.data));
+              resetForm();
+              setSubmitting(false)
+              window.location = "/dashboard";
+            })
+          .catch((error) => {console.log(error);})
+    }
+})(SignUp)
+
+
+export default FormikSignUp
 

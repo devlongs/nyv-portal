@@ -3,11 +3,11 @@ import Main from '../main/Main';
 import Sidebar from '../sidebar/Sidebar';
 import styles from './DashboardContainer.module.css';
 
-function DashboardContainer() {
+function DashboardContainer(props) {
     return (
         <div className={styles.dashboardcontainer}>
             <Sidebar />
-            <Main />
+            <Main email={props.email}/>
         </div>
     )
 }

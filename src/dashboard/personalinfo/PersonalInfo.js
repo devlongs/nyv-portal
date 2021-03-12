@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom';
 import styles from  './PersonalInfo.module.css';
 
-function PersonalInfo() {
+function PersonalInfo(props) {
     return (
         <div className={styles.personalinfo}>
             <table id={styles.personalinfotable}>
@@ -21,7 +21,7 @@ function PersonalInfo() {
                 </tr>
                 <tr>
                     <td>Email Address</td>
-                    <td>johndoe@gmail.com</td>
+                    <td>{props.email}</td>
                 </tr>
                 <tr>
                     <td>Gender</td>
