@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Ring } from "react-awesome-spinners";
 import DashboardContainer from "./dashboardContainer/DashboardContainer";
 import DashboardNavbar from "./dashboardNavbar/DashboardNavbar";
 import Footer from "../components/footer/Footer";
@@ -7,13 +8,12 @@ import Footer from "../components/footer/Footer";
 function Dashboard(props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-
+  const [loading, setLoading] = useState(true);
 
   if (!sessionStorage.getItem("token")) {
     window.location = "/login";
   }
 
-  
   useEffect(() => {
     let token = sessionStorage.getItem("token");
     token = JSON.parse(token);
@@ -33,6 +33,7 @@ function Dashboard(props) {
         setName(res.data.name);
         setEmail(res.data.email);
       })
+      .then(() => setLoading(false))
       .catch((error) => {
         console.error(error);
       });
@@ -43,8 +44,9 @@ function Dashboard(props) {
     bottom: 0,
   };
 
-
-  return (
+  return loading ? (
+    <Ring />
+  ) : (
     <>
       <DashboardNavbar name={name} />
       <DashboardContainer email={email} />
