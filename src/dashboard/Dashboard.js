@@ -6,8 +6,7 @@ import Footer from "../components/footer/Footer";
 import Loading from "../components/loading/Loading";
 
 function Dashboard(props) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [firstname, setFirstname] = useState("");
   const [isLoading, setLoading] = useState(true);
 
   if (!sessionStorage.getItem("token")) {
@@ -23,15 +22,14 @@ function Dashboard(props) {
     // window.location = '/login';
 
     axios
-      .get("https://volunteer109.herokuapp.com/api/me", {
+      .get("https://volunteer109.herokuapp.com/api/user/profile", {
         headers: {
           Authorization: `Bearer ${myToken}`,
           accept: "application/json",
         },
       })
       .then((res) => {
-        setName(res.data.name);
-        setEmail(res.data.email);
+        setFirstname(res.data.firstname);
       })
       .then(() => setLoading(false))
       .catch((error) => {
@@ -48,12 +46,11 @@ function Dashboard(props) {
     <Loading />
   ) : (
     <>
-      <DashboardNavbar name={name} />
-      <DashboardContainer email={email} />
+      <DashboardNavbar name={firstname} />
+      <DashboardContainer />
       <Footer dashboardfooterstyle={dashboardfooterstyle} />
     </>
   );
 }
 
 export default Dashboard;
-  

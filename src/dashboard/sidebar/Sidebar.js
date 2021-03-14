@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BsPersonFill } from "react-icons/bs";
+import { AiFillProfile } from "react-icons/ai";
 import { BsFillBookmarksFill } from "react-icons/bs";
 import { BsWrench } from "react-icons/bs";
 import { BsBellFill } from "react-icons/bs";
@@ -16,6 +17,11 @@ function Sidebar() {
           <a href="#">
             <BsPersonFill /> My Profile
           </a>
+        </li>
+        <li>
+          <Link to="/editform">
+            <AiFillProfile /> Create Profile
+          </Link>
         </li>
         <li>
           <a href="#">

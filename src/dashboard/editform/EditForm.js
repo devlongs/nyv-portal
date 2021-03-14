@@ -1,229 +1,314 @@
-import React from 'react';
-import styles from './Editform.module.css';
+import React, { useState } from "react";
+import axios from "axios";
+import styles from "./Editform.module.css";
 
+const EditForm = () => {
+  if (!sessionStorage.getItem("token")) {
+    window.location = "/login";
+  }
 
-class EditForm extends React.Component{
-    state = {
-        firstName: "",
-        firstNameError: "",
-        lastName: "",
-        lastNameError: "",
-        email: "",
-        emailError: "",
-        gender: "",
-        genderError: "",
-        nationality: "",
-        nationalityError: "",
-        maritalStatus: "",
-        maritalStatusError: "",
-        language: "",
-        languageError: "",
-        nonFamily: "",
-        nonFamilyError: "",
-        volunteer: "",
-        volunteerError: "",
-        disability: "",
-        disabilityError: "",
-        phone: "",
-        phoneError: "",
-        currentAddress: "",
-        currentAddressError: "",
-        permanentAddress: "",
-        permanentAddressError: "",
-        qualification: "",
-        qualificationError: "",
-        skills: "",
-        skillsError: "",
-        experience: "",
-        experienceError: ""
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [ismarried, setIsmarried] = useState("");
+  const [language, setLanguage] = useState("");
+  const [nonfamily, setNonfamily] = useState("");
+  const [volunteer, setVolunteer] = useState("");
+  const [disability, setDisability] = useState("");
+  const [phone, setPhone] = useState("");
+  const [currentaddress, setCurrentaddress] = useState("");
+  const [permanentaddress, setPermanentaddress] = useState("");
+  const [qualification, setQualification] = useState("");
+  const [itskills, setItskills] = useState("");
+  const [experience, setExperience] = useState("");
+
+  const handleChangeFirstName = (e) => setFirstName(e.target.value);
+  const handleChangeLastName = (e) => setLastName(e.target.value);
+  const handleChangeEmail = (e) => setEmail(e.target.value);
+  const handleChangeGender = (e) => setGender(e.target.value);
+  const handleChangeIsmarried = (e) => setIsmarried(e.target.value);
+  const handleChangeLanguage = (e) => setLanguage(e.target.value);
+  const handleChangeNonfamily = (e) => setNonfamily(e.target.value);
+  const handleChangeVolunteer = (e) => setVolunteer(e.target.value);
+  const handleChangeDisability = (e) => setDisability(e.target.value);
+  const handleChangePhone = (e) => setPhone(e.target.value);
+  const handleChangeCurrentaddress = (e) => setCurrentaddress(e.target.value);
+  const handleChangePermanentaddress = (e) =>
+    setPermanentaddress(e.target.value);
+  const handleChangeQualification = (e) => setQualification(e.target.value);
+  const handleChangeItskills = (e) => setItskills(e.target.value);
+  const handleChangeExperience = (e) => setExperience(e.target.value);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log(firstname);
+    // console.log(lastname);
+    // console.log(email);
+    // console.log(gender);
+    // console.log(ismarried);
+    // console.log(language);
+    // console.log(nonfamily);
+    // console.log(volunteer);
+    // console.log(disability);
+    // console.log(phone);
+    // console.log(currentaddress);
+    // console.log(permanentaddress);
+    // console.log(qualification);
+    // console.log(itskills);
+    // console.log(experience);
+
+    let token = sessionStorage.getItem("token");
+    token = JSON.parse(token);
+    console.log(token.token);
+    let myToken = token.token;
+
+    const configuration = {
+      method: "post",
+      url: "https://volunteer109.herokuapp.com/api/user/profile",
+      data: {
+        firstname: firstname,
+        lastname: lastname,
+        gender: gender,
+        marital_status: ismarried,
+        correspondence_laguage: language,
+        nonfamily_duty: nonfamily,
+        serving_volunteer: volunteer,
+        disability: disability,
+        mobile_number: phone,
+        current_address: currentaddress,
+        permanent_address: permanentaddress,
+        academic_qualifications: qualification,
+        computer_skills: itskills,
+        professional_experience: experience,
+      },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${myToken}`,
+      },
     };
 
-    handleChange = event => {
-        const isCheckbox = event.target.type === "checkbox";
-        this.setState({
-            [event.target.name]: isCheckbox ? event.target.checked : event.target.value 
-        });
-    };
+    axios(configuration)
+      .then((result) => {
+        console.log(result);
+        // sessionStorage.setItem("token", JSON.stringify(result.data.data));
+        // window.location = "/dashboard";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-    validate = () => {
-        let firstNameError = "";
-        let lastNameError = "";
-        let emailError = "";
-        let genderError = "";
-        let nationalityError = "";
-        let maritalStatusError = "";
-        let languageError = "";
-        let nonFamilyError = "";
-        let volunteerError = "";
-        let disabilityError = "";
-        let phoneError = "";
-        let currentAddressError = "";
-        let permanentAddressError = "";
-        let qualificationError = "";
-        let skillsError = "";
-        let experienceError =  "";
-
-        if(this.state.firstName === ""){
-            firstNameError = "First Name cannot be blank";
-        }
-
-        if(this.state.lastName === ""){
-            lastNameError = "Last Name cannot be blank";
-        }
-
-        if(this.state.email === ""){
-            emailError = "Email cannot be blank";
-        }
-
-        if(this.state.gender === ""){
-            genderError = "Please select an option";
-        } 
-
-        
-        if(this.state.nationality === ""){
-            nationalityError = "Nationality cannot be blank";
-        } 
-
-        if(this.state.language === ""){
-            languageError = "Language cannot be blank";
-        }
-
-        if(this.state.phone === ""){
-            phoneError = "Phone cannot be blank";
-        }
-
-        if(this.state.currentAddress === ""){
-            currentAddressError = "Current Address cannot be blank";
-        }
-
-        if(this.state.permanentAddress === ""){
-            permanentAddressError = "Permanent Address cannot be blank";
-        }
-
-        if(this.state.experience === ""){
-            experienceError = "Experience cannot be blank";
-        }
-
-        if(firstNameError || lastNameError || emailError || genderError || nationalityError || languageError || phoneError || currentAddressError || permanentAddressError || experienceError){
-            this.setState({firstNameError, lastNameError, emailError, genderError, nationalityError, languageError, phoneError, currentAddressError, permanentAddressError, experienceError});
-            return false;
-        }
-
-        return true;
-    }
-
-    handleSubmit = event => {
-        event.preventDefault();
-        const isValid = this.validate();
-        if(isValid){
-            console.log(this.state);
-        }
-    };
-
-    render(){
-        return (
-            <div className={styles.body}>
-                <div className={styles.header}></div>
-                <div className={styles.formcontainer}>
-                <form onSubmit={this.handleSubmit}>
-                    <h1>Edit Information</h1>
-                    <div className={styles.forminputs}>
-                        <label htmlFor="firstname">First Name</label>
-                        <input className={styles.forminput} type="text" name="firstName" value={this.state.firstName} onChange={this.handleChange} />
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.firstNameError}</div>
-                    </div>
-                    <div className={styles.forminputs}>
-                        <label htmlFor="lastname">Last Name</label>
-                        <input className={styles.forminput} type="text" name="lastName" value={this.state.lastName} onChange={this.handleChange}/>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.lastNameError}</div>
-                    </div>
-                    <div className={styles.forminputs}>
-                        <label htmlFor="email">Email Address</label>
-                        <input className={styles.forminput} type="email" name="email" value={this.state.email} onChange={this.handleChange}/>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.emailError}</div>
-                    </div>
-                    <div className={styles.forminputsradio}>
-                    <label>Gender</label>
-                        <input className={styles.forminput} type="radio" name="gender" value="male" onChange={this.handleChange}/> <span>Male</span> <input className={styles.forminput} type="radio" name="gender" value="female" onChange={this.onChange}/> <span>Female</span>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.genderError}</div>
-                    </div>
-                    <div className={styles.forminputs}>
-                        <label htmlFor="nationality">Nationality</label>
-                        <input className={styles.forminput} type="text" name="nationality" value={this.state.nationality} onChange={this.handleChange}/>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.nationalityError}</div>
-                    </div>
-                    <div className={styles.forminputsradio} style={{marginBottom: "15px"}}>
-                    <label>Marital Status</label>
-                        <input className={styles.forminput} type="radio" name="maritalStatus" onChange={this.onChange} value={this.state.maritalStatus}/> <span>Single</span> <input className={styles.forminput} type="radio" name="maritalStatus" onChange={this.onChange} value={this.state.maritalStatus}/> <span>Married</span>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.maritalStatus}</div>
-                    </div>
-                    <div className={styles.forminputs}>
-                        <label htmlFor="language">Correspondence Language</label>
-                        <input className={styles.forminput} type="text" name="language" value={this.state.language} onChange={this.handleChange}/>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.languageError}</div>
-                    </div>
-                    <div className={styles.forminputsradio} style={{marginBottom: "15px"}}>
-                        <label htmlFor="nonfamily">I Am Willing To Serve in a Non-family Duty Station</label>
-                        <input className={styles.forminput} type="radio" name="nonfamily" value={this.state.nonFamily} onChange={this.handleChange}/> <span>Yes</span> <input className={styles.forminput} type="radio" name="nonfamily" id="nonfamily"/> <span>No</span>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.nonFamilyError}</div>
-                    </div>
-                    <div className={styles.forminputsradio} style={{marginBottom: "15px"}}>
-                        <label>I Am Interested In Serving as a Volunteer</label>
-                        <input className={styles.forminput} type="radio" name="volunteer" value={this.state.volunteer} onChange={this.handleChange}/> <span>Yes</span> <input className={styles.forminput} type="radio" name="volunteer" value={this.state.volunteer} onChange={this.handleChange}/> <span>No</span>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.volunteerError}</div>
-                    </div>
-                    <div className={styles.forminputsradio} style={{marginBottom: "15px"}}>
-                        <label>Disbality(s)</label>
-                        <input className={styles.forminput} type="radio" name="disability" value={this.state.disability} onChange={this.handleChange}/> <span>Yes</span> <input className={styles.forminput} type="radio" name="disability" value={this.state.disability} onChange={this.handleChange}/> <span>None</span>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.disabilityError}</div>
-                    </div>
-                    <div className={styles.forminputs}>
-                        <label htmlFor="mobilenumber">Mobile Number</label>
-                        <input className={styles.forminput} type="tel" name="phone" value={this.state.phone} onChange={this.handleChange}/>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.phoneError}</div>
-                    </div>
-                    <div className={styles.forminputs}>
-                        <label htmlFor="currentaddress">Current Address</label>
-                        <textarea id="currentaddress" name="currentAddress" value={this.state.currentAddress} onChange={this.handleChange}></textarea>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.currentAddressError}</div>
-                    </div>
-                    <div className={styles.forminputs}>
-                        <label htmlFor="permanentaddress">Permanent Address</label>
-                        <textarea id="permanentaddress" name="permanentAddress" value={this.state.permanentAddress} onChange={this.handleChange}></textarea>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.permanentAddressError}</div>
-                    </div>
-                    <div className={styles.forminputsselect}>
-                        <label htmlFor="qualifications">Academic Qualifications</label>
-                        <select onChange={this.handleChange} name="qualification">
-                            <option value={this.state.qualification}>Bsc</option>
-                            <option value={this.state.qualification}>Diploma</option>
-                            <option value={this.state.qualification}>Msc</option>
-                        </select>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.qualification}</div>
-                    </div>
-                    <div className={styles.forminputsselect}>
-                        <label htmlFor="skills">Computer/IT Skills</label>
-                        <select onChange={this.handleChange} name="skills">
-                            <option value={this.state.skills}>Poor</option>
-                            <option value={this.state.skills}>Good</option>
-                            <option value={this.state.skills}>Very Good</option>
-                        </select>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.skills}</div>
-                    </div>
-                    <div className={styles.forminputs}>
-                        <label htmlFor="experience">Professional Experience</label>
-                        <textarea name="experience" value={this.state.experience} onChange={this.handleChange}></textarea>
-                        <div style={{fontSize: "14px", color: "red", padding: "10px"}}>{this.state.experienceError}</div>
-                    </div>
-                    <div className={styles.forminputs}>
-                        <button type="submit" className={styles.formbtn}>Submit</button>
-                    </div>
-                </form>
-                </div>
-               
-            </div>
-        )
-    }
-}
+  return (
+    <div className={styles.body}>
+      <div className={styles.header}></div>
+      <div className={styles.formcontainer}>
+        <form onSubmit={handleSubmit}>
+          <h1>Edit Information</h1>
+          <div className={styles.forminputs}>
+            <label htmlFor="firstname">First Name</label>
+            <input
+              className={styles.forminput}
+              type="text"
+              name="firstName"
+              value={firstname}
+              onChange={handleChangeFirstName}
+            />
+          </div>
+          <div className={styles.forminputs}>
+            <label htmlFor="lastname">Last Name</label>
+            <input
+              className={styles.forminput}
+              type="text"
+              name="lastName"
+              value={lastname}
+              onChange={handleChangeLastName}
+            />
+          </div>
+          <div className={styles.forminputs}>
+            <label htmlFor="email">Email Address</label>
+            <input
+              className={styles.forminput}
+              type="email"
+              name="email"
+              value={email}
+              onChange={handleChangeEmail}
+            />
+          </div>
+          <div className={styles.forminputsradio} onChange={handleChangeGender}>
+            <label>Gender</label>
+            <input
+              className={styles.forminput}
+              type="radio"
+              value="Male"
+              name="gender"
+            />{" "}
+            <span>Male</span>{" "}
+            <input
+              className={styles.forminput}
+              type="radio"
+              value="Female"
+              name="gender"
+            />{" "}
+            <span>Female</span>
+          </div>
+          <div
+            className={styles.forminputsradio}
+            style={{ marginBottom: "15px" }}
+            onChange={handleChangeIsmarried}
+          >
+            <label>Marital Status</label>
+            <input
+              className={styles.forminput}
+              type="radio"
+              name="ismarried"
+              value="Single"
+            />{" "}
+            <span>Single</span>{" "}
+            <input
+              className={styles.forminput}
+              type="radio"
+              name="ismarried"
+              value="Married"
+            />{" "}
+            <span>Married</span>
+          </div>
+          <div className={styles.forminputs}>
+            <label htmlFor="language">Correspondence Language</label>
+            <input
+              className={styles.forminput}
+              type="text"
+              value={language}
+              onChange={handleChangeLanguage}
+            />
+          </div>
+          <div
+            className={styles.forminputsradio}
+            style={{ marginBottom: "15px" }}
+            onChange={handleChangeNonfamily}
+          >
+            <label htmlFor="nonfamily">
+              I Am Willing To Serve in a Non-family Duty Station
+            </label>
+            <input
+              className={styles.forminput}
+              type="radio"
+              name="nonfamily"
+              value="Yes"
+            />{" "}
+            <span>Yes</span>{" "}
+            <input
+              className={styles.forminput}
+              type="radio"
+              name="nonfamily"
+              value="No"
+            />{" "}
+            <span>No</span>
+          </div>
+          <div
+            className={styles.forminputsradio}
+            style={{ marginBottom: "15px" }}
+            onChange={handleChangeVolunteer}
+          >
+            <label>I Am Interested In Serving as a Volunteer</label>
+            <input
+              className={styles.forminput}
+              type="radio"
+              name="volunteer"
+              value="Yes"
+            />{" "}
+            <span>Yes</span>{" "}
+            <input
+              className={styles.forminput}
+              type="radio"
+              name="volunteer"
+              value="No"
+            />{" "}
+            <span>No</span>
+          </div>
+          <div
+            className={styles.forminputsradio}
+            style={{ marginBottom: "15px" }}
+            onChange={handleChangeDisability}
+          >
+            <label>Disbality(s)</label>
+            <input
+              className={styles.forminput}
+              type="radio"
+              name="disability"
+              value="Yes"
+            />{" "}
+            <span>Yes</span>{" "}
+            <input
+              className={styles.forminput}
+              type="radio"
+              name="disability"
+              value="None"
+            />{" "}
+            <span>None</span>
+          </div>
+          <div className={styles.forminputs}>
+            <label>Mobile Number</label>
+            <input
+              className={styles.forminput}
+              type="tel"
+              name="phone"
+              value={phone}
+              onChange={handleChangePhone}
+            />
+          </div>
+          <div className={styles.forminputs}>
+            <label>Current Address</label>
+            <textarea
+              name="currentaddress"
+              value={currentaddress}
+              onChange={handleChangeCurrentaddress}
+            ></textarea>
+          </div>
+          <div className={styles.forminputs}>
+            <label>Permanent Address</label>
+            <textarea
+              name="permanentaddress"
+              value={permanentaddress}
+              onChange={handleChangePermanentaddress}
+            ></textarea>
+          </div>
+          <div className={styles.forminputsselect}>
+            <label>Academic Qualifications</label>
+            <select
+              onChange={handleChangeQualification}
+              name="qualification"
+              value={qualification}
+            >
+              <option value="Bsc">Bsc</option>
+              <option value="Diploma">Diploma</option>
+              <option value="Msc">Msc</option>
+            </select>
+          </div>
+          <div className={styles.forminputsselect}>
+            <label>Computer/IT Skills</label>
+            <select onChange={handleChangeItskills} value={itskills}>
+              <option value="Poor">Poor</option>
+              <option value="Good">Good</option>
+              <option value="Very Good">Very Good</option>
+            </select>
+          </div>
+          <div className={styles.forminputs}>
+            <label>Professional Experience</label>
+            <textarea
+              value={experience}
+              onChange={handleChangeExperience}
+            ></textarea>
+          </div>
+          <div className={styles.forminputs}>
+            <button type="submit" className={styles.formbtn}>
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export default EditForm;
